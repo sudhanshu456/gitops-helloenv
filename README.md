@@ -104,3 +104,75 @@ curl helloenv.stage.com
 ```
 
 # What's Under The Hood
+
+Now that we have things running, let's back up and look at _exactly_ how Flux
+pulls everything together. A good first step here is to look back at the `flux
+bootstrap` command we used to kick everything off:
+
+```
+flux bootstrap github \ 
+--components-extra=image-reflector-controller,image-automation-controller \
+--owner=$GITHUB_USER     --repository=gitops-helloenv     \
+--path=./clusters/my-cluster/     --branch=main    \
+ --read-write-key     --personal --private=false
+```
+
+flux bootstrap github: Initiates the process of setting up a GitOps repository on GitHub.
+
+--components-extra=image-reflector-controller,image-automation-controller: Specifies additional Flux components to include in the setup.
+
+--owner=$GITHUB_USER: Specifies the GitHub owner (likely a GitHub username or organization name) where the repository will be created.
+
+--repository=gitops-helloenv: Defines the name of the GitOps repository to be created on GitHub.
+
+--path=./clusters/my-cluster/: Specifies the path within the repository where the configuration files will be stored.
+
+--branch=main: Sets the default branch for the repository to "main."
+
+--read-write-key: Generates a read-write SSH key for accessing the GitOps repository.
+
+--personal: Indicates that a personal access token should be used for authentication.
+
+--private=false: Specifies that the GitOps repository should not be private (i.e., it will be public).
+
+
+`infrastructure.yaml` is a good place to look first.
+
+The first document defines a `Kustomization` resource called `ingress-nginx`.
+This Kustomization lives in the `flux-system` namespace, doesn't depend on
+anything, and has `kustomize` files at `infrastructure/ingress-nginx`
+
+Let's look quickly at `ingress-nginx`'s `kustomize` files:
+
+```bash
+#@echo
+#@notypeout
+#@nowaitbefore
+#@waitafter
+ls -l ./infrastructure/ingress-nginx
+```
+
+The `kustomization.yaml` file tells `kustomize` what other files to use:
+
+```bash
+#@echo
+#@notypeout
+#@nowaitbefore
+#@waitafter
+cat ./infrastructure/ingress-nginx/kustomization.yaml
+```
+
+<!-- @clear -->
+
+If we look at the file, it has namespace that creates `ingress-nginx` namespace , HelmRepository tells Flux where to find the Helm chart for `ingress-nginx` and HelmRelease  tells Flux how to use the Helm chart to install
+`ingress-nginx` . We're not using `kustomize`'s ability to
+patch things here; we're just using it to sequence applying some YAML -- and
+some of the YAML is for Flux resources rather than Kubernetes resources.
+
+So that's a quick look at some of the definitions for the infrastructure of
+this cluster -- basically, all the things our application needs to work. Now
+let's continue with a look at `apps.yaml`, which is the definition of the
+helloenv-app application itself. There's just a single YAML document in this file: it
+defines a Kustomization named `apps`, still in `flux-system` namespace, that
+depends on `ingress-nginx`, and has `kustomize` files in
+the `apps` directory:
