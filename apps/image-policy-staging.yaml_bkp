@@ -6,8 +6,8 @@ metadata:
   namespace: flux-system
 spec:
   filterTags:
-    extract: $ts
-    pattern: Build-[a-f0-9]+-(?P<ts>[0-9]+)
+    extract: $b
+    pattern: Build-(?P<b>[0-9]+)
   imageRepositoryRef:
     name: helloenv
   policy:
