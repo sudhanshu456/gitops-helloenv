@@ -36,7 +36,7 @@ minikube addons enable ingress
 Beginning with an empty cluster, our initial task is to bootstrap Flux itself. Flux serves as the foundation upon which we'll bootstrap all other components.
 
 Note the `--owner` and `--repository` switches here: we are explicitly looking
-for the `${GITHUB_USER}/gitops-linkerd` repo here.
+for the `${GITHUB_USER}/gitops-helloenv` repo here.
 
 ```
 flux bootstrap github \ 
