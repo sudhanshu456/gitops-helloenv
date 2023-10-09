@@ -168,4 +168,6 @@ If we take a closer look at the definitions used in this project's infrastructur
 
 The infra section provided a quick overview of the infrastructure definitions required for the cluster. Essentially, it encompasses all the necessary components for our application to function correctly.
 
-Now, let's proceed with a closer examination of `apps.yaml`, which defines the `helloenv-app` application itself. Within this file, there is a single YAML document that defines a Kustomization named `apps`. This Kustomization is still within the `flux-system` namespace and has associated `kustomize` files located in the `apps` directory.
+Now, let's proceed with a closer examination of `apps.yaml`, which defines the `helloenv-app` application itself. Within this file, you'll find references to the `apps` directory. This directory is a central location containing Kustomizations and configuration settings for setting up the `helloenv-app` application in both the `prod` and `staging` environments. Additionally, it includes configurations for image automation for `helloenv` app in `staging` and `prod` env. 
+
+In the following sections, we'll take a detailed look at each file within the `apps` directory, one by one.
