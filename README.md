@@ -172,7 +172,7 @@ Now, let's proceed with a closer examination of `apps.yaml`, which defines the `
 
 In the following sections, we'll take a detailed look at each file within the `apps` directory, one by one.
 
-`git-repo.yaml`,this instructs Flux on how to interact with the Git repository where your application's source code resides. It contains the following configuration:
+**git-repo.yaml**,this instructs Flux on how to interact with the Git repository where your application's source code resides. It contains the following configuration:
 ```
   ref:
     branch: main
@@ -180,22 +180,22 @@ In the following sections, we'll take a detailed look at each file within the `a
     name: ssh-credentials
   url: ssh://git@github.com/shashankpai/helloenv-app
 ```
-`ref`: Specifies the Git branch to watch for changes, in this case, main.
-`secretRef`: Refers to a Kubernetes Secret named `ssh-credentials`, which likely contains SSH keys for secure Git access.
-`url`: Indicates the URL of the Git repository 
+**ref**: Specifies the Git branch to watch for changes, in this case, main.
+**secretRef**: Refers to a Kubernetes Secret named `ssh-credentials`, which likely contains SSH keys for secure Git access.
+**url**: Indicates the URL of the Git repository 
 
-`image-repo.yaml`,  is responsible for scanning the Docker image registry and fetching image tags based on the defined policy. Here's the configuration:
+**image-repo.yaml**,  is responsible for scanning the Docker image registry and fetching image tags based on the defined policy. Here's the configuration:
 
 ```
 image: docker.io/shapai/helloenv
   interval: 1m0s
 ```
-`image`: Specifies the Docker image repository (docker.io/shapai/helloenv) to scan for image tags.
-`interval`: Sets the interval at which Flux will scan the image repository (every 1 minute in this case) and fetch image tags according to the defined policy.
+**image**: Specifies the Docker image repository (docker.io/shapai/helloenv) to scan for image tags.
+**interval**: Sets the interval at which Flux will scan the image repository (every 1 minute in this case) and fetch image tags according to the defined policy.
 
 Next we will go through the image policy files `image-policy-staging.yaml` and `image-policy-prod.yaml`
 
-`image-policy-staging.yaml`  defines the image tagging policy for the staging environment. Here's the configuration:
+**image-policy-staging.yaml**  defines the image tagging policy for the staging environment. Here's the configuration:
 
 ```
   filterTags:
@@ -207,9 +207,9 @@ Next we will go through the image policy files `image-policy-staging.yaml` and `
     numerical:
       order: asc
 ```
-`filterTags`: This section specifies how to filter image tags. It extracts the timestamp ($ts) from tags that match the specified pattern. Tags are filtered in ascending order based on this timestamp, ensuring that Flux fetches the latest built image for the staging environment.
+**filterTags**: This section specifies how to filter image tags. It extracts the timestamp ($ts) from tags that match the specified pattern. Tags are filtered in ascending order based on this timestamp, ensuring that Flux fetches the latest built image for the staging environment.
 
-`image-policy-prod.yaml` defines the image tagging policy for the production environment:
+**image-policy-prod.yaml** defines the image tagging policy for the production environment:
 
 ```
   imageRepositoryRef:
@@ -219,7 +219,7 @@ Next we will go through the image policy files `image-policy-staging.yaml` and `
       range: '>=1.0.0'
 ```
 
-`imageRepositoryRef`: Refers to the image repository named helloenv.
-`policy`: Defines a Semantic Versioning (SemVer) policy that specifies a range for acceptable image tags (in this case, any version greater than or equal to 1.0.0).
+**imageRepositoryRef**: Refers to the image repository named helloenv.
+**policy**: Defines a Semantic Versioning (SemVer) policy that specifies a range for acceptable image tags (in this case, any version greater than or equal to 1.0.0).
 
 These image policies play a crucial role in ensuring that Flux deploys the correct images to the respective environments (staging and production) based on the defined criteria.
