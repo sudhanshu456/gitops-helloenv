@@ -3,6 +3,9 @@
 This is a documentation, designed to guide you through the practical implementation of a GitOps workflow using FluxCD. In this documentation, we'll explore how to leverage the power of image automation and the image reflector controller to streamline your development and deployment processes.
 
 We will showcase this through a deployment pipeline in 2 env (staging and production) wherein using githubactions we will do the CI process of building and pushing the containers to registry , once pushed to registry, the image automation and image reflector controllers will identify the change and make an automatic update to kubernetes manifests and flux will automatically reconcile the changes in stage env. For Prod, to ensure control, changes are promoted to production through a Pull Request (PR) with manual approval.
+![gitops-image-automation](https://github.com/shashankpai/gitops-helloenv/assets/24639491/f54850ab-1d8a-41d7-b197-4d20530f3046)
+
+
 
 # Requirements
 - Flux CLI that you can download here https://fluxcd.io/docs/cmd/
