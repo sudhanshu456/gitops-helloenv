@@ -148,34 +148,24 @@ anything, and has `kustomize` files at `infrastructure/ingress-nginx`
 Let's look quickly at `ingress-nginx`'s `kustomize` files:
 
 ```bash
-#@echo
-#@notypeout
-#@nowaitbefore
-#@waitafter
 ls -l ./infrastructure/ingress-nginx
 ```
 
 The `kustomization.yaml` file tells `kustomize` what other files to use:
 
 ```bash
-#@echo
-#@notypeout
-#@nowaitbefore
-#@waitafter
 cat ./infrastructure/ingress-nginx/kustomization.yaml
 ```
 
 <!-- @clear -->
 
-If we look at the file, it has namespace that creates `ingress-nginx` namespace , HelmRepository tells Flux where to find the Helm chart for `ingress-nginx` and HelmRelease  tells Flux how to use the Helm chart to install
-`ingress-nginx` . We're not using `kustomize`'s ability to
-patch things here; we're just using it to sequence applying some YAML -- and
-some of the YAML is for Flux resources rather than Kubernetes resources.
 
-So that's a quick look at some of the definitions for the infrastructure of
-this cluster -- basically, all the things our application needs to work. Now
-let's continue with a look at `apps.yaml`, which is the definition of the
-helloenv-app application itself. There's just a single YAML document in this file: it
-defines a Kustomization named `apps`, still in `flux-system` namespace, that
-depends on `ingress-nginx`, and has `kustomize` files in
-the `apps` directory:
+If we take a closer look at the definitions used in this project's infrastructure setup. We'll start by examining the file, which includes the following key components:
+
+- **Namespace**: It creates the `ingress-nginx` namespace.
+- **HelmRepository**: This section informs Flux about the location of the Helm chart for `ingress-nginx`.
+- **HelmRelease**: Here, Flux is instructed on how to utilize the Helm chart to install `ingress-nginx`. It's important to note that we are not utilizing `kustomize` for patching operations but instead for sequencing the application of specific YAML files. Some of these YAML files are dedicated to Flux resources rather than standard Kubernetes resources.
+
+The infra section provided a quick overview of the infrastructure definitions required for the cluster. Essentially, it encompasses all the necessary components for our application to function correctly.
+
+Now, let's proceed with a closer examination of `apps.yaml`, which defines the `helloenv-app` application itself. Within this file, there is a single YAML document that defines a Kustomization named `apps`. This Kustomization is still within the `flux-system` namespace and has associated `kustomize` files located in the `apps` directory.
