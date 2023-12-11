@@ -11,7 +11,7 @@ spec:
     branch: main
   secretRef:
     name: flux-system
-  url: ssh://git@github.com/shashankpai/gitops-helloenv
+  url: ssh://git@github.com/sudhanshu456/gitops-helloenv
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
