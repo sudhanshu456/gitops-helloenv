@@ -5,5 +5,5 @@ metadata:
   name: helloenv
   namespace: flux-system
 spec:
-  image: docker.io/shapai/helloenv
+  image: docker.io/sudhanshu456/helloenv
   interval: 1m0s
