@@ -10,4 +10,4 @@ spec:
     branch: main
   secretRef:
     name: ssh-credentials
-  url: ssh://git@github.com/shashankpai/helloenv-app
+  url: ssh://git@github.com/sudhanshu456/helloenv-app
